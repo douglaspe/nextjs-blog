@@ -1,22 +1,22 @@
 import React from 'react';
 import Head from 'next/head';
 import { Layout } from '../src/components';
+import 'isomorphic-fetch';
 import { siteConfig } from '../src/config';
 import utilStyles from '../styles/utils.module.scss';
-import 'isomorphic-fetch';
 
-function Home({ repositories }) {
+interface Props {
+  repositories?: Array<string>;
+}
+
+function Home({ repositories }: Props) {
   return (
     <Layout home>
       <Head>
         <title>{siteConfig.title}</title>
       </Head>
       <section className={utilStyles.headingMd}>
-        <p>Hello, I'm Douglas. I'm a Front-End Developer.</p>
-        <p>
-          (This is a sample website - you’ll be building a site like this on{' '}
-          <a href="https://nextjs.org/learn">our Next.js tutorial</a>.)
-        </p>
+        <p>Hello, I&apos;m Douglas. I&apos;m a Front-End Developer.</p>
       </section>
       <section>
         {repositories.map((repo) => (
