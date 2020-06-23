@@ -1,12 +1,18 @@
+import React from 'react';
 import Head from 'next/head';
-import styles from './layout.module.scss';
-import utilStyles from '../../../styles/utils.module.scss';
 import Link from 'next/link';
 import { siteConfig } from '../../config';
+import utilStyles from '../../../styles/utils.module.scss';
+import styles from './layout.module.scss';
 
 const name = 'Douglas Pereira';
 
-export default function Layout({ children, home }) {
+type Props = {
+  children?: React.ReactNode;
+  home?: boolean;
+};
+
+const Layout = ({ children, home }: Props) => {
   return (
     <div className={styles.container}>
       <Head>
@@ -63,4 +69,6 @@ export default function Layout({ children, home }) {
       )}
     </div>
   );
-}
+};
+
+export default Layout;
