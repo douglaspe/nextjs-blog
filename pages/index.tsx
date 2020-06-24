@@ -1,12 +1,12 @@
 import React from 'react';
 import Head from 'next/head';
-import { Layout } from '../src/components';
+import { Layout } from 'components/';
 import 'isomorphic-fetch';
-import { siteConfig } from '../src/config';
-import utilStyles from '../styles/utils.module.scss';
+import { siteConfig } from 'config';
+import utilStyles from 'styles/utils.module.scss';
 
 interface Props {
-  repositories?: Array<string>;
+  repositories?: Array<{ id: number; name: string }>;
 }
 
 function Home({ repositories }: Props) {
