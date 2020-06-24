@@ -1,8 +1,8 @@
 import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import { siteConfig } from '../../config';
-import utilStyles from '../../../styles/utils.module.scss';
+import { siteConfig } from 'config';
+import utilStyles from 'styles/utils.module.scss';
 import styles from './layout.module.scss';
 
 const name = 'Douglas Pereira';

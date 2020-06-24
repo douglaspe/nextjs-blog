@@ -1,28 +1,29 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
-import { Layout } from '../../src/components';
-import { post } from '../../src/services/user';
+import { Layout } from 'components';
+import { apiPost } from 'services';
 import styles from './register.module.scss';
 
 const Register = () => {
   const [user, setUser] = useState({ name: '', email: '', password: '' });
 
   const handleChange = (event) => {
-    const field = event.target.name;
-    const value = event.target.value;
+    const { name, value } = event.target;
 
     setUser((prevState) => {
       return {
         ...prevState,
-        [field]: value,
+        [name]: value,
       };
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    post(user);
+    const response = await apiPost(user);
+
+    console.log(response);
   };
 
   return (
@@ -39,14 +40,14 @@ const Register = () => {
           placeholder="nome"
         />
         <input
-          type="text"
+          type="email"
           name="email"
           onChange={handleChange}
           value={user.email}
           placeholder="email"
         />
         <input
-          type="text"
+          type="password"
           name="password"
           onChange={handleChange}
           value={user.password}

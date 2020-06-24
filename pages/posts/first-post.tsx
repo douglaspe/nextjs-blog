@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import { Layout, Alert } from '../../src/components';
+import { Layout, Alert } from 'components/';
 
 export default function FirstPost() {
   return (
