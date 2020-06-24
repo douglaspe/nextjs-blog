@@ -63,7 +63,7 @@ const Layout = ({ children, home }: Props) => {
       {!home && (
         <div className={styles.backToHome}>
           <Link href="/">
-            <a>‚Üê Back to home</a>
+            <a>Üê Back to home</a>
           </Link>
         </div>
       )}

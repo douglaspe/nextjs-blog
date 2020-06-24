@@ -31,6 +31,20 @@
         "no-unused-expressions": ["error", {
             "allowTaggedTemplates": true
         }],
-        "import/extensions": "off"
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+                "js": "never",
+                "jsx": "never",
+                "ts": "never",
+                "tsx": "never"
+            }
+        ]
+    },
+    "settings": {
+        "import/resolver": {
+            "typescript": {}
+        }
     }
 }
