@@ -28,6 +28,6 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx", "services/api.ts"
+    "**/*.tsx", "services/user.service.ts"
   ]
 }

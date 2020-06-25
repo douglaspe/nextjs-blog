@@ -20,6 +20,12 @@ type Props = {
 const Layout = ({ children, home, token, loading }: Props) => {
   const router = useRouter();
 
+  const logout = () => {
+    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT';
+    document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:01 GMT';
+    router.push('/login');
+  };
+
   return (
     <>
       <Head>
@@ -48,6 +54,12 @@ const Layout = ({ children, home, token, loading }: Props) => {
           <Link href="/login">
             <a className={styles.loginButton}>Login</a>
           </Link>
+        )}
+
+        {token && router.pathname !== '/' && (
+          <button type="button" className={styles.loginButton} onClick={logout}>
+            Logout
+          </button>
         )}
 
         <header className={styles.header}>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
 import { Layout } from 'components';
-import { auth } from 'services';
+import { User } from 'services';
 import { withAuth } from 'hocs';
 import styles from './login.module.scss';
 
@@ -27,13 +27,12 @@ const Login = () => {
 
     setLoading(true);
 
-    const response = await auth(fieldsUser);
+    const response = await User.authenticate(fieldsUser);
 
     if (response.ok && response.status === 200) {
       const { token, user } = response.data;
-      await localStorage.setItem('token', token);
-      await localStorage.setItem('user', JSON.stringify(user));
       document.cookie = `token=${token}`;
+      document.cookie = `user=${JSON.stringify(user)}`;
       Router.push('/posts/first-post');
       setLoading(false);
       return;
@@ -48,7 +47,10 @@ const Login = () => {
       <Head>
         <title>Register</title>
       </Head>
-      <form onSubmit={!loading && handleSubmit} className={styles.login}>
+      <form
+        onSubmit={!loading ? handleSubmit : () => {}}
+        className={styles.login}
+      >
         <input
           type="email"
           name="email"
