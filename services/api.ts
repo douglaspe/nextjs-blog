@@ -11,10 +11,20 @@ api.addResponseTransform((response) => {
 const apiPost = async (user) => {
   try {
     const response = await api.post('/api/register', user);
+
     return response;
   } catch (err) {
     return err;
   }
 };
 
-export default apiPost;
+const auth = async (user) => {
+  try {
+    const response = await api.post('/api//authenticate', user);
+    return response;
+  } catch (err) {
+    return err;
+  }
+};
+
+export { apiPost, auth };

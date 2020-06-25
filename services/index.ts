@@ -1,1 +1,1 @@
-export { default as apiPost } from './api';
+export * from './api';

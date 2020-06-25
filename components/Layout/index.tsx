@@ -10,9 +10,11 @@ const name = 'Douglas Pereira';
 type Props = {
   children?: React.ReactNode;
   home?: boolean;
+  isLogged?: boolean;
+  token?: string;
 };
 
-const Layout = ({ children, home }: Props) => {
+const Layout = ({ children, home, token }: Props) => {
   return (
     <div className={styles.container}>
       <Head>
@@ -30,6 +32,11 @@ const Layout = ({ children, home }: Props) => {
         <meta name="og:title" content={siteConfig.title} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
+      {!token && (
+        <Link href="/login">
+          <a className={styles.loginButton}>Login</a>
+        </Link>
+      )}
       <header className={styles.header}>
         {home ? (
           <>
@@ -63,7 +70,7 @@ const Layout = ({ children, home }: Props) => {
       {!home && (
         <div className={styles.backToHome}>
           <Link href="/">
-            <a>Üê Back to home</a>
+            <a>Back to home</a>
           </Link>
         </div>
       )}
