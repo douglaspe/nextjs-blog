@@ -3,11 +3,13 @@ import Head from 'next/head';
 import Router from 'next/router';
 import { Layout } from 'components';
 import { auth } from 'services';
+import { withAuth } from 'hocs';
 import styles from './login.module.scss';
 
 const Login = () => {
   const [fieldsUser, setFieldUser] = useState({ email: '', password: '' });
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -23,6 +25,8 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    setLoading(true);
+
     const response = await auth(fieldsUser);
 
     if (response.ok && response.status === 200) {
@@ -31,18 +35,20 @@ const Login = () => {
       await localStorage.setItem('user', JSON.stringify(user));
       document.cookie = `token=${token}`;
       Router.push('/posts/first-post');
+      setLoading(false);
       return;
     }
 
     setError(response.data.error);
+    setLoading(false);
   };
 
   return (
-    <Layout isLogged>
+    <Layout loading={loading}>
       <Head>
         <title>Register</title>
       </Head>
-      <form onSubmit={handleSubmit} className={styles.login}>
+      <form onSubmit={!loading && handleSubmit} className={styles.login}>
         <input
           type="email"
           name="email"
@@ -57,11 +63,11 @@ const Login = () => {
           value={fieldsUser.password}
           placeholder="senha"
         />
-        <button type="submit">Add</button>
+        <button type="submit">{loading ? 'Carregando' : 'Entrar'}</button>
         {error && <span>{error}</span>}
       </form>
     </Layout>
   );
 };
 
-export default Login;
+export default withAuth(Login);

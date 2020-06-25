@@ -1,7 +1,9 @@
 import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { siteConfig } from 'config';
+import { Loading } from 'components';
 import utilStyles from 'styles/utils.module.scss';
 import styles from './layout.module.scss';
 
@@ -12,11 +14,14 @@ type Props = {
   home?: boolean;
   isLogged?: boolean;
   token?: string;
+  loading?: boolean;
 };
 
-const Layout = ({ children, home, token }: Props) => {
+const Layout = ({ children, home, token, loading }: Props) => {
+  const router = useRouter();
+
   return (
-    <div className={styles.container}>
+    <>
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta
@@ -32,49 +37,58 @@ const Layout = ({ children, home, token }: Props) => {
         <meta name="og:title" content={siteConfig.title} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      {!token && (
-        <Link href="/login">
-          <a className={styles.loginButton}>Login</a>
-        </Link>
+
+      {loading && (
+        <Loading>
+          <h1>Carregando...</h1>
+        </Loading>
       )}
-      <header className={styles.header}>
-        {home ? (
-          <>
-            <img
-              src="/images/profile.jpg"
-              className={`${styles.headerHomeImage} ${utilStyles.borderCircle}`}
-              alt={name}
-            />
-            <h1 className={utilStyles.heading2Xl}>{name}</h1>
-          </>
-        ) : (
-          <>
-            <Link href="/">
-              <a>
-                <img
-                  src="/images/profile.jpg"
-                  className={`${styles.headerImage} ${utilStyles.borderCircle}`}
-                  alt={name}
-                />
-              </a>
-            </Link>
-            <h2 className={utilStyles.headingLg}>
-              <Link href="/">
-                <a className={utilStyles.colorInherit}>{name}</a>
-              </Link>
-            </h2>
-          </>
-        )}
-      </header>
-      <main>{children}</main>
-      {!home && (
-        <div className={styles.backToHome}>
-          <Link href="/">
-            <a>Back to home</a>
+      <div className={styles.container}>
+        {!token && router.pathname !== '/login' && (
+          <Link href="/login">
+            <a className={styles.loginButton}>Login</a>
           </Link>
-        </div>
-      )}
-    </div>
+        )}
+
+        <header className={styles.header}>
+          {home ? (
+            <>
+              <img
+                src="/images/profile.jpg"
+                className={`${styles.headerHomeImage} ${utilStyles.borderCircle}`}
+                alt={name}
+              />
+              <h1 className={utilStyles.heading2Xl}>{name}</h1>
+            </>
+          ) : (
+            <>
+              <Link href="/">
+                <a>
+                  <img
+                    src="/images/profile.jpg"
+                    className={`${styles.headerImage} ${utilStyles.borderCircle}`}
+                    alt={name}
+                  />
+                </a>
+              </Link>
+              <h2 className={utilStyles.headingLg}>
+                <Link href="/">
+                  <a className={utilStyles.colorInherit}>{name}</a>
+                </Link>
+              </h2>
+            </>
+          )}
+        </header>
+        <main>{children}</main>
+        {!home && (
+          <div className={styles.backToHome}>
+            <Link href="/">
+              <a>Back to home</a>
+            </Link>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

@@ -1,18 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Head from 'next/head';
-import Router from 'next/router';
 import { Layout, Alert } from 'components/';
-import nextCookie from 'next-cookies';
+import { unauthorized } from 'hocs';
 
 type Props = {
   token?: string;
 };
 
 const FirstPost = ({ token }: Props) => {
-  useEffect(() => {
-    if (!token) Router.push('/login');
-  }, []);
-
   return (
     <Layout home={false} token={token}>
       <Head>
@@ -25,10 +20,4 @@ const FirstPost = ({ token }: Props) => {
   );
 };
 
-FirstPost.getInitialProps = (context) => {
-  const { token } = nextCookie(context) || null;
-
-  return { token };
-};
-
-export default FirstPost;
+export default unauthorized(FirstPost);
