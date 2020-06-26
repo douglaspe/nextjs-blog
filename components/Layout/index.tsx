@@ -9,22 +9,22 @@ import styles from './layout.module.scss';
 
 const name = 'Douglas Pereira';
 
-type Props = {
+interface LayoutData {
   children?: React.ReactNode;
   home?: boolean;
   isLogged?: boolean;
-  token?: string;
+  user?: object;
   loading?: boolean;
-};
+}
 
-const Layout = ({ children, home, token, loading }: Props) => {
+const Layout = ({ children, home, user, loading }: LayoutData) => {
   const router = useRouter();
 
-  const logout = () => {
-    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT';
-    document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:01 GMT';
+  async function logout() {
+    document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     router.push('/login');
-  };
+  }
 
   return (
     <>
@@ -50,13 +50,13 @@ const Layout = ({ children, home, token, loading }: Props) => {
         </Loading>
       )}
       <div className={styles.container}>
-        {!token && router.pathname !== '/login' && (
+        {home && (
           <Link href="/login">
             <a className={styles.loginButton}>Login</a>
           </Link>
         )}
 
-        {token && router.pathname !== '/' && (
+        {user && (
           <button type="button" className={styles.loginButton} onClick={logout}>
             Logout
           </button>

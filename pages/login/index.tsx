@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Router from 'next/router';
 import { Layout } from 'components';
 import { User } from 'services';
-import { withAuth } from 'hocs';
+import { Auth } from 'routes';
 import styles from './login.module.scss';
 
 const Login = () => {
@@ -72,4 +72,4 @@ const Login = () => {
   );
 };
 
-export default withAuth(Login);
+export default Auth(Login);

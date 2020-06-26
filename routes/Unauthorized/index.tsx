@@ -1,24 +1,23 @@
 import React, { useEffect } from 'react';
 import nextCookie from 'next-cookies';
-import { useRouter } from 'next/router';
+import Router from 'next/router';
 import { Loading } from 'components';
 
-type Props = {
-  token?: string;
-};
+interface UnauthorizedData {
+  user: string;
+  token: string;
+}
 
 const unauthorized = (Component) => {
-  const Unauthorized = ({ token }: Props) => {
-    const router = useRouter();
-
+  const Unauthorized = ({ user, token }: UnauthorizedData) => {
     useEffect(() => {
-      if (!token) {
-        router.push('/login');
+      if (!token && !user) {
+        Router.replace('/login');
       }
     }, []);
 
-    return token ? (
-      <Component token={token} />
+    return token && user ? (
+      <Component user={user} />
     ) : (
       <Loading>
         <h1>Carregando...</h1>
@@ -27,9 +26,9 @@ const unauthorized = (Component) => {
   };
 
   Unauthorized.getInitialProps = (context) => {
-    const { token } = nextCookie(context) || null;
+    const { user, token } = nextCookie(context) || null;
 
-    return { token };
+    return { user, token };
   };
 
   return Unauthorized;

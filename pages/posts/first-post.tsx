@@ -1,23 +1,21 @@
 import React from 'react';
 import Head from 'next/head';
 import { Layout, Alert } from 'components/';
-import { unauthorized } from 'hocs';
+import { unauthorized } from 'routes';
 
-type Props = {
-  token?: string;
-};
+interface FirstPostData {
+  user: object;
+}
 
-const FirstPost = ({ token }: Props) => {
-  return (
-    <Layout home={false} token={token}>
-      <Head>
-        <title>First Post</title>
-      </Head>
-      <Alert type="success">
-        <h1>First Post</h1>
-      </Alert>
-    </Layout>
-  );
-};
+const FirstPost = ({ user }: FirstPostData) => (
+  <Layout user={user}>
+    <Head>
+      <title>First Post</title>
+    </Head>
+    <Alert type="success">
+      <h1>First Post</h1>
+    </Alert>
+  </Layout>
+);
 
 export default unauthorized(FirstPost);
