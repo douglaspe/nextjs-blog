@@ -13,7 +13,7 @@ class User {
 
   static async authenticate(user) {
     try {
-      const response = await Api.post('/api//authenticate', user);
+      const response = await Api.post('/api/authenticate', user);
       return response;
     } catch (err) {
       return err;

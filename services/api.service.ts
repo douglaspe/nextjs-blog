@@ -1,7 +1,7 @@
 import { create } from 'apisauce';
 
 const Api = create({
-  baseURL: 'http://localhost:1234',
+  baseURL: process.env.BASE_URL,
 });
 
 Api.addResponseTransform((response) => {

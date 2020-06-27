@@ -20,6 +20,8 @@ interface LayoutData {
 const Layout = ({ children, home, user, loading }: LayoutData) => {
   const router = useRouter();
 
+  console.log(user);
+
   async function logout() {
     document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
@@ -50,7 +52,7 @@ const Layout = ({ children, home, user, loading }: LayoutData) => {
         </Loading>
       )}
       <div className={styles.container}>
-        {home && (
+        {home && !user && (
           <Link href="/login">
             <a className={styles.loginButton}>Login</a>
           </Link>
