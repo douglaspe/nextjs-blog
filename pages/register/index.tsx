@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
 import { Layout } from 'components';
-import { apiPost } from 'services';
+import { User } from 'services';
 import Router from 'next/router';
 import styles from './register.module.scss';
 
 const Register = () => {
-  const [user, setUser] = useState({ name: '', email: '', password: '' });
+  const [userData, setUserData] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
   const [error, setError] = useState(null);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    setUser((prevState) => {
+    setUserData((prevState) => {
       return {
         ...prevState,
         [name]: value,
@@ -23,7 +27,7 @@ const Register = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const response = await apiPost(user);
+    const response = await User.post(userData);
 
     if (response.ok && response.status === 200) {
       Router.push('/login');
@@ -43,21 +47,21 @@ const Register = () => {
           type="text"
           name="name"
           onChange={handleChange}
-          value={user.name}
+          value={userData.name}
           placeholder="nome"
         />
         <input
           type="email"
           name="email"
           onChange={handleChange}
-          value={user.email}
+          value={userData.email}
           placeholder="email"
         />
         <input
           type="password"
           name="password"
           onChange={handleChange}
-          value={user.password}
+          value={userData.password}
           placeholder="senha"
         />
         <button type="submit">Add</button>
