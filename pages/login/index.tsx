@@ -31,8 +31,8 @@ const Login = () => {
 
     if (response.ok && response.status === 200) {
       const { token, user } = response.data;
-      document.cookie = `token=${token}`;
-      document.cookie = `user=${JSON.stringify(user)}`;
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', user);
       Router.push('/posts/first-post');
       setLoading(false);
       return;

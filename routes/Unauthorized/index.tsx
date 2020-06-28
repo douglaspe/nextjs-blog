@@ -1,34 +1,31 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import nextCookie from 'next-cookies';
 import Router from 'next/router';
 import { Loading } from 'components';
 
-interface UnauthorizedData {
-  user: string;
-  token: string;
-}
-
 const unauthorized = (Component) => {
-  const Unauthorized = ({ user, token }: UnauthorizedData) => {
+  const Unauthorized = () => {
+    const [signIn, setSignIn] = useState(false);
+
     useEffect(() => {
-      if (!token && !user) {
+      const token = localStorage.getItem('token');
+      const user = localStorage.getItem('user');
+
+      if (!user && !token) {
         Router.replace('/login');
+        return;
       }
+
+      setSignIn(true);
     }, []);
 
-    return token && user ? (
-      <Component user={user} />
+    return signIn ? (
+      <Component signIn={signIn} />
     ) : (
       <Loading>
         <h1>Carregando...</h1>
       </Loading>
     );
-  };
-
-  Unauthorized.getInitialProps = (context) => {
-    const { user, token } = nextCookie(context) || null;
-
-    return { user, token };
   };
 
   return Unauthorized;

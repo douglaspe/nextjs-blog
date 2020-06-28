@@ -1,7 +1,10 @@
 import { create } from 'apisauce';
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
 
 const Api = create({
-  baseURL: process.env.BASE_URL,
+  baseURL: publicRuntimeConfig.baseURL,
 });
 
 Api.addResponseTransform((response) => {

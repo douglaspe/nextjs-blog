@@ -1,7 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import Router from 'next/router';
 import { siteConfig } from 'config';
 import { Loading } from 'components';
 import utilStyles from 'styles/utils.module.scss';
@@ -13,19 +13,14 @@ interface LayoutData {
   children?: React.ReactNode;
   home?: boolean;
   isLogged?: boolean;
-  user?: object;
+  signIn?: boolean;
   loading?: boolean;
 }
 
-const Layout = ({ children, home, user, loading }: LayoutData) => {
-  const router = useRouter();
-
-  console.log(user);
-
+const Layout = ({ children, home, signIn, loading }: LayoutData) => {
   async function logout() {
-    document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    router.push('/login');
+    localStorage.clear();
+    Router.push('/login');
   }
 
   return (
@@ -38,9 +33,8 @@ const Layout = ({ children, home, user, loading }: LayoutData) => {
         />
         <meta
           property="og:image"
-          content={`https://og-image.now.sh/${encodeURI(
-            siteConfig.title
-          )}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`}
+          content={`https://og-image.now.sh/${encodeURI(siteConfig.title)}
+          .png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`}
         />
         <meta name="og:title" content={siteConfig.title} />
         <meta name="twitter:card" content="summary_large_image" />
@@ -51,14 +45,17 @@ const Layout = ({ children, home, user, loading }: LayoutData) => {
           <h1>Carregando...</h1>
         </Loading>
       )}
+
       <div className={styles.container}>
-        {home && !user && (
+        {home && !signIn && (
           <Link href="/login">
-            <a className={styles.loginButton}>Login</a>
+            <a href="/login" className={styles.loginButton}>
+              Login
+            </a>
           </Link>
         )}
 
-        {user && (
+        {signIn && (
           <button type="button" className={styles.loginButton} onClick={logout}>
             Logout
           </button>
@@ -77,7 +74,7 @@ const Layout = ({ children, home, user, loading }: LayoutData) => {
           ) : (
             <>
               <Link href="/">
-                <a>
+                <a href="/">
                   <img
                     src="/images/profile.jpg"
                     className={`${styles.headerImage} ${utilStyles.borderCircle}`}
@@ -87,7 +84,9 @@ const Layout = ({ children, home, user, loading }: LayoutData) => {
               </Link>
               <h2 className={utilStyles.headingLg}>
                 <Link href="/">
-                  <a className={utilStyles.colorInherit}>{name}</a>
+                  <a href="/" className={utilStyles.colorInherit}>
+                    {name}
+                  </a>
                 </Link>
               </h2>
             </>
@@ -97,7 +96,7 @@ const Layout = ({ children, home, user, loading }: LayoutData) => {
         {!home && (
           <div className={styles.backToHome}>
             <Link href="/">
-              <a>Back to home</a>
+              <a href="/">Back to home</a>
             </Link>
           </div>
         )}

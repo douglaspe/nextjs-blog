@@ -1,34 +1,30 @@
-import React, { useEffect } from 'react';
-import nextCookie from 'next-cookies';
+import React, { useEffect, useState } from 'react';
 import Router from 'next/router';
 import { Loading } from 'components';
 
-interface AuthData {
-  user: string;
-  token: string;
-}
-
 const Auth = (Component) => {
-  const WithAuth = ({ user, token }: AuthData) => {
+  const WithAuth = () => {
+    const [signIn, setSignIn] = useState(false);
+
     useEffect(() => {
+      const token = localStorage.getItem('token');
+      const user = localStorage.getItem('user');
+
       if (user && token) {
         Router.replace('/');
+        return;
       }
+
+      setSignIn(true);
     }, []);
 
-    return !user && !token ? (
+    return signIn ? (
       <Component />
     ) : (
       <Loading>
         <h1>Carregando...</h1>
       </Loading>
     );
-  };
-
-  WithAuth.getInitialProps = (context) => {
-    const { user, token } = nextCookie(context) || null;
-
-    return { user, token };
   };
 
   return WithAuth;

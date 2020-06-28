@@ -4,11 +4,11 @@ import { Layout, Alert } from 'components/';
 import { unauthorized } from 'routes';
 
 interface FirstPostData {
-  user: object;
+  signIn: boolean;
 }
 
-const FirstPost = ({ user }: FirstPostData) => (
-  <Layout user={user}>
+const FirstPost = ({ signIn }: FirstPostData) => (
+  <Layout signIn={signIn}>
     <Head>
       <title>First Post</title>
     </Head>
