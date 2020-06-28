@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import nextCookie from 'next-cookies';
 import Router from 'next/router';
 import { Loading } from 'components';
 
@@ -10,7 +9,6 @@ const unauthorized = (Component) => {
     useEffect(() => {
       const token = localStorage.getItem('token');
       const user = localStorage.getItem('user');
-
       if (!user && !token) {
         Router.replace('/login');
         return;

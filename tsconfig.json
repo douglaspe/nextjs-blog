@@ -17,10 +17,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "baseUrl": ".",
-    "paths": {
-      "@components/*": ["components/*"]
-    }
+    "outDir": "./.next",
+    "rootDir": ".",
+    "baseUrl": "./src",
   },
   "exclude": [
     "node_modules"

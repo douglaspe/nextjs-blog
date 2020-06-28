@@ -2,7 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import { Layout } from 'components/';
 import { siteConfig } from 'config';
-import { Route } from 'routes';
+import { Route } from 'hocs';
 import utilStyles from 'styles/utils.module.scss';
 
 interface HomeData {

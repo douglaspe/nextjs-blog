@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Router from 'next/router';
 import { Layout } from 'components';
 import { User } from 'services';
-import { Auth } from 'routes';
+import { Auth } from 'hocs';
 import styles from './login.module.scss';
 
 const Login = () => {
@@ -32,7 +32,7 @@ const Login = () => {
     if (response.ok && response.status === 200) {
       const { token, user } = response.data;
       localStorage.setItem('token', token);
-      localStorage.setItem('user', user);
+      localStorage.setItem('user', JSON.stringify(user));
       Router.push('/posts/first-post');
       setLoading(false);
       return;

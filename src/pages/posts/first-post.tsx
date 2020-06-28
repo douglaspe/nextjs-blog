@@ -1,7 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import { Layout, Alert } from 'components/';
-import { unauthorized } from 'routes';
+import { unauthorized } from 'hocs';
 
 interface FirstPostData {
   signIn: boolean;
